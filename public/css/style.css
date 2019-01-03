@@ -1,0 +1,59 @@
+@font-face {
+  font-family: playFair;
+  src: url(/public/fonts/Playfair_Display/PlayfairDisplay-Regular.ttf);
+}
+
+@font-face {
+  font-family: ubuntu;
+  src: url(/public/fonts/Ubuntu/Ubuntu-Regular.ttf);
+}
+
+h2{
+	color: #b4ad9e;
+	text-align: left;
+	text-transform: uppercase;
+	font-size: 18px;
+	margin-top: 35px;
+}
+
+h1{
+	color: #626262;
+	text-align: left;
+	font-family: playFair;
+	font-size: 32px;
+	font-weight: bold;
+	margin-bottom: 25px;
+}
+
+
+.menutitre{
+	font-family: playFair;
+	text-transform: uppercase;
+	color: #626262;
+	text-align: right;
+}
+
+.topMargin{
+	margin-top: 50px;
+}
+
+.botMargin{
+	margin-bottom: 75px;
+}
+
+.fullDiv{
+	width: 1024px;
+}
+
+.fullDivP{
+	width: 100%;
+}
+
+.content{
+	text-align: left;
+	font-family: ubuntu;
+}
+
+.eCenter{
+	text-align: center;
+}
