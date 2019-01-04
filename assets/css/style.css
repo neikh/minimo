@@ -33,6 +33,10 @@ h1{
 	text-align: right;
 }
 
+.littleTopMargin{
+	margin-top: 25px;
+}
+
 .topMargin{
 	margin-top: 50px;
 }
@@ -59,6 +63,10 @@ h1{
 	padding: 25px 50px 25px 50px;
 	font-family: playFair;
 	font-size: 25px;
+}
+
+.padBot {
+	padding-bottom: 50px;
 }
 
 .visible{
@@ -105,4 +113,40 @@ h1{
 .footer{
 	background-color: #f2f2f2;
 	margin-top: 50px;
+}
+
+.tameColor{
+	color: #b4ad9e;
+}
+
+.mediumColor, .mediumColor a{
+	color: #626262;
+}
+
+.rounded{
+	background-color: #626262;
+	color: white;
+	font-size: 42px;
+	width: 75px;
+	height: 75px;
+	border-radius: 100%;
+}
+
+.vCentered{
+	padding-top: 8px;
+}
+
+.bold{
+	font-weight: bold;
+}
+
+.comments input{
+	width: 100%;
+	height: 75px;
+	padding: 15px;
+	font-family: ubuntu;
+}
+
+.comments input::placeholder{
+	text-transform: uppercase;
 }

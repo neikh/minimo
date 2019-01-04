@@ -85,3 +85,34 @@ function subscribeNewsletter(mail){
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	xhr.send("action=subscribeNewsletter&mail="+mail);
 }
+
+function addNewComment(com, postId){
+	
+	var name = document.getElementById("name").value;
+ 
+	if (event.key == "Enter" && !event.shiftKey){
+		xhr = new XMLHttpRequest();
+		 
+		xhr.onreadystatechange = function()
+		{
+			if (xhr.readyState == 4 && xhr.status == 200)
+			{
+				document.getElementById('commentsContainer').innerHTML = xhr.response;
+			}
+		}
+		 
+		xhr.open("POST",'index.php',true);
+		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		xhr.send("action=addNewComment&com="+com+"&name="+name+"&postId="+postId);
+	}
+}
+
+function myName(name){
+	if (name != ''){
+		initiales = name.match(/\b\w/g).join('').toUpperCase();
+		document.getElementById('myName').innerHTML = initiales;
+	} else {
+		document.getElementById('myName').innerHTML = '';
+	}
+		
+}

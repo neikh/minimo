@@ -12,9 +12,9 @@
 	 </div>
 	 
 	<div class="large-5 medium-5 small-5 cell">
-		follow 
-		<i class="fab fa-facebook-f"></i> 
-		<i class="fab fa-twitter"></i> 
+		follow &nbsp;&nbsp;
+		<i class="fab fa-facebook-f"></i> &nbsp;&nbsp;
+		<i class="fab fa-twitter"></i> &nbsp;&nbsp;
 		<i class="fab fa-instagram"></i>
 	</div>
 </div>

@@ -62,4 +62,21 @@
 
 			return $article;
 		}
+		
+		public function getOtherArticles($id)
+		{
+			$articles = [];
+
+			$q = $this->_db->prepare("SELECT * FROM `posts` LEFT JOIN posts_posts ON posts.id = posts_posts.post_id1 WHERE `post_type` = 'article' AND `post_status` = 'publish' AND posts.id <> :id LIMIT 0,3");
+			$q->bindValue(":id", $id);
+			$q->execute();
+
+			while ($data = $q->fetch(PDO::FETCH_ASSOC))
+			{
+				$data['post_name'] = $this->getPicture($data['post_id2']);
+				$articles[] = new Articles($data);
+			}
+
+			return $articles;
+		}
 	}

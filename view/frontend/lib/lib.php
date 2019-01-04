@@ -5,4 +5,15 @@
 		$z = str_replace(' ', '-', $z);
 		return trim($z, '-');
 	}
+	
+	function initiales($z){
+		$words = preg_split("/[\s,_-]+/", $z);
+		$acronym = "";
+
+		foreach ($words as $w) {
+		  $acronym .= $w[0];
+		}
+		
+		return $acronym;
+	}
 ?>

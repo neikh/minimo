@@ -1,6 +1,8 @@
 <div class="grid-x grid-padding-x">
 	 <div class="large-4 medium-4 small-4 cell">
-		<img src="/assets/images/logo_minimo.png">
+		<a href="/">
+			<img src="/assets/images/logo_minimo.png">
+		</a>
 	 </div>
 	  <div class="large-8 medium-8 small-8 cell">
 		<div class="grid-x grid-padding-x">
