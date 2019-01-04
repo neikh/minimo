@@ -1,0 +1,10 @@
+<IfModule mod_deflate.c>
+<FilesMatch "\.(ico|jpg|jpeg|png|gif|js|css|html|php|txt|xml)$">
+SetOutputFilter DEFLATE
+</FilesMatch>
+</IfModule>
+
+RewriteEngine on
+Options +FollowSymlinks
+
+RewriteRule   article/([0-9]+)/([a-zA-Z0-9]+)         index.php?page=article&article=$1&nom=$2	[L]
