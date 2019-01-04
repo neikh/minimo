@@ -1,0 +1,108 @@
+@font-face {
+  font-family: playFair;
+  src: url(/assets/fonts/Playfair_Display/PlayfairDisplay-Regular.ttf);
+}
+
+@font-face {
+  font-family: ubuntu;
+  src: url(/assets/fonts/Ubuntu/Ubuntu-Regular.ttf);
+}
+
+h2{
+	color: #b4ad9e;
+	text-align: left;
+	text-transform: uppercase;
+	font-size: 18px;
+	margin-top: 35px;
+}
+
+h1{
+	color: #626262;
+	text-align: left;
+	font-family: playFair;
+	font-size: 32px;
+	font-weight: bold;
+	margin-bottom: 25px;
+}
+
+
+.menutitre{
+	font-family: playFair;
+	text-transform: uppercase;
+	color: #626262;
+	text-align: right;
+}
+
+.topMargin{
+	margin-top: 50px;
+}
+
+.botMargin{
+	margin-bottom: 75px;
+}
+
+.fullDivP{
+	width: 100%;
+}
+
+.content, .content a, .content a:hover{
+	text-align: left;
+	font-family: ubuntu;
+	color: #626262;
+}
+
+.eCenter{
+	text-align: center;
+}
+
+.fullPad{
+	padding: 25px 50px 25px 50px;
+	font-family: playFair;
+	font-size: 25px;
+}
+
+.visible{
+	opacity: 0;
+}
+
+.newsletter{
+	background-color: #f2f2f2;
+	font-weight: bold;
+	padding-top: 50px;
+	margin-bottom: 75px;
+}
+
+.newsletter input, .newsletter input:focus{
+	background-color: #f2f2f2;
+	border: 0;
+	border-bottom: solid 3px #626262;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	padding: 25px;
+	color: #626262;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	width: 100%;
+}
+
+
+.newsletter input::placeholder { 
+	color: #626262;
+}
+
+.float{
+	position: relative;
+	top: -90px;
+	left: 275px;
+	display: block;
+	font-size: 25px;
+}
+
+.pointer{
+	cursor: pointer;
+}
+
+.footer{
+	background-color: #f2f2f2;
+	margin-top: 50px;
+}
