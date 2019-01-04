@@ -7,17 +7,21 @@
 
 <div class="grid-x grid-padding-x">
 	<div class="large-12 cell">
-		<p class="topMargin fullDiv eCenter"><img src="/assets/images/<?= $featuredArticle->post_name(); ?>" width="100%"></p>
+	    <a href="article/<?= $featuredArticle->id().'/'.sanitize($featuredArticle->post_title()) ?>/">
+			<p class="topMargin fullDiv eCenter"><img src="assets/images/<?= $featuredArticle->post_name(); ?>" width="100%"></p>
+		</a>
 	</div>
 </div>
 			
 <div class="grid-x grid-padding-x topMargin botMargin">
 	<div class="large-1 cell"></div>
 	<div class="large-10 cell">
+		<a href="article/<?= $featuredArticle->id().'/'.sanitize($featuredArticle->post_title()) ?>/">
 			<h2><?= $featuredArticle->post_category(); ?></h2>
 			<h1><?= $featuredArticle->post_title(); ?></h1>
 			<p class="content"><?= substr($featuredArticle->post_content(), 0, 350).'...'; ?></p>
 			<h2>Leave a comment</h2>
+		</a>
 	</div>
 	<div class="large-1 cell"></div>
 </div>
@@ -35,8 +39,8 @@
 		}
 		
 		echo '<div class="large-5 cell">
-				<a href="/article/'.$article->id().'/'.sanitize($article->post_title()).'/">
-					<img src="/assets/images/'.$article->post_name().'">
+				<a href="article/'.$article->id().'/'.sanitize($article->post_title()).'/">
+					<img src="assets/images/'.$article->post_name().'">
 					<h2>'.$article->post_category().'</h2>
 					<h1>'.$article->post_title().'</h1>
 					<p class="content">'.substr($article->post_content(), 0, 150).'...</p></a>

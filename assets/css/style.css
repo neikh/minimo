@@ -1,11 +1,11 @@
 @font-face {
   font-family: playFair;
-  src: url(/assets/fonts/Playfair_Display/PlayfairDisplay-Regular.ttf);
+  src: url(assets/fonts/Playfair_Display/PlayfairDisplay-Regular.ttf);
 }
 
 @font-face {
   font-family: ubuntu;
-  src: url(/assets/fonts/Ubuntu/Ubuntu-Regular.ttf);
+  src: url(assets/fonts/Ubuntu/Ubuntu-Regular.ttf);
 }
 
 h2{

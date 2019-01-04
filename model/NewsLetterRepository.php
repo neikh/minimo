@@ -24,9 +24,9 @@
 				$q->bindValue(":mail", $email);
 				$q->execute();
 
-				return '<img src="/assets/images/valid.png" width="250"><br />Inscription réussie !';
+				return '<img src="assets/images/valid.png" width="250"><br />Inscription réussie !';
 			} else {
-				return '<img src="/assets/images/invalid.png" width="250"><br />Cet email est déjà inscrit !';
+				return '<img src="assets/images/invalid.png" width="250"><br />Cet email est déjà inscrit !';
 			}
 		}
 		
