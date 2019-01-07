@@ -6,10 +6,10 @@
 		if (isset($_POST['action'])){
 			
 			if ($_POST['action'] == "loadMoreArticles"){
-				$offset = (int)$_POST['offset'];
+				$cat = (string)$_POST['cat'];
 				
-				if (is_int($offset)){
-					loadMoreArticles($offset);
+				if (is_string($cat)){
+					loadMoreArticles($cat);
 				}
 			} elseif($_POST['action'] == "subscribeNewsletter"){
 				$mail = (string)$_POST['mail'];
@@ -38,6 +38,12 @@
 					loadArticle($article);
 				}
 				
+			} elseif ($_GET['page'] == "index"){
+				$cat = (string)$_GET['cat'];
+				
+				if (is_string($cat)){
+					loadIndex($cat);
+				}
 			}
 			
 		} else {

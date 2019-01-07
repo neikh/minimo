@@ -7,18 +7,26 @@
 		return new $dataLoader($db);
 	}
 	
-	function loadIndex(){
+	function loadIndex($cat = 'all'){
 		$articlesRepository = databaseConnect("ArticlesRepository");
 		
-		$featuredArticle = $articlesRepository->getFeaturedArticle(1);
-		$articles = $articlesRepository->getListArticles();
+		$_SESSION['loadedArticle'] = 0;
+		$category = $articlesRepository->getCategory();
+		$featuredArticle = $articlesRepository->getFeaturedArticle($cat);
+		$articles = $articlesRepository->getListArticles($cat);
 		require "view/frontend/viewIndex.php";
 	}
 	
-	function loadMoreArticles($offset){
+	function loadMoreArticles($cat){
 		$articlesRepository = databaseConnect("ArticlesRepository");
 		
-		$articles = $articlesRepository->getListArticles($offset);
+		$articleLoaded = $_SESSION['loadedArticle'];
+		$articles = $articlesRepository->getListArticles($cat, $_SESSION['loadedArticle']);
+		
+		if ($articleLoaded == $_SESSION['loadedArticle']){
+			$erreur = "Aucun article supplémentaire n'a été trouvé.";
+		}
+		
 		require "view/update/loadMoreArticles.php";
 	}
 	
@@ -37,8 +45,10 @@
 		$articlesRepository = databaseConnect("ArticlesRepository");
 		$commentsRepository = databaseConnect("CommentsRepository");
 		
-		$article = $articlesRepository->getFeaturedArticle($id);
+		$category = $articlesRepository->getCategory();
+		$article = $articlesRepository->getArticle($id);
 		$otherArticles = $articlesRepository->getOtherArticles($id);
+		$popularArticles = $articlesRepository->getPopularArticles();
 		
 		$nbCom = $commentsRepository->nbComment($id);
 		$coms = $commentsRepository->getComments($id);

@@ -7,7 +7,7 @@
 
 <div class="grid-x grid-padding-x">
 	<div class="large-12 cell">
-		<p class="topMargin fullDiv eCenter"><img src="assets/images/<?= $article->post_name(); ?>" width="100%"></p>
+		<p class="fullDiv eCenter"><img src="assets/images/<?= $article->post_name(); ?>" width="100%"></p>
 	</div>
 </div>
 			

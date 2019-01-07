@@ -1,4 +1,4 @@
-function articleLoader(offset){
+function articleLoader(cat){
 	xhr = new XMLHttpRequest();
 	
 	xhr.onreadystatechange = function()
@@ -12,7 +12,7 @@ function articleLoader(offset){
 	
 	xhr.open("POST",'index.php',true);
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	xhr.send("action=loadMoreArticles&offset="+offset);
+	xhr.send("action=loadMoreArticles&cat="+cat);
 }
 
 function fade(element) {

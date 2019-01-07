@@ -7,31 +7,57 @@
 
 <div class="grid-x grid-padding-x">
 	<div class="large-12 cell">
-		<p class="topMargin fullDiv eCenter"><img src="assets/images/<?= $article->post_name(); ?>" width="100%"></p>
+		<p class="fullDiv eCenter"><img src="assets/images/<?= $article->post_name(); ?>" width="100%"></p>
 	</div>
 </div>
 			
 <div class="grid-x grid-padding-x topMargin botMargin">
 	<div class="large-1 cell"></div>
-	<div class="large-10 cell">
+	<div class="large-8 cell">
+		<a href="category/<?= $article->post_category(); ?>/">
 			<h2><?= $article->post_category(); ?></h2>
-			<h1><?= $article->post_title(); ?></h1>
-			<p class="content"><?= $article->post_content(); ?></p>
-	</div>
-	<div class="large-1 cell"></div>
-</div>
+		</a>
+		<h1><?= $article->post_title(); ?></h1>
+		<p class="content"><?= $article->post_content(); ?></p>
+		
+		<div class="menuTitre tameColor bigFont topMargin">
+			share &nbsp;&nbsp;
+			<i class="fab fa-facebook-f"></i> &nbsp;&nbsp;
+			<i class="fab fa-twitter"></i> &nbsp;&nbsp;
+			<i class="fab fa-google-plus-g"></i> &nbsp;&nbsp;
+			<i class="fab fa-tumblr"></i> &nbsp;&nbsp;
+			<i class="fab fa-pinterest"></i> &nbsp;&nbsp;
+		</div>
 
-<div class="grid-x grid-padding-x topMargin botMargin">
-	<div class="large-1 cell"></div>
-	<div class="large-10 cell menuTitre tameColor">
-		share &nbsp;&nbsp;
-		<i class="fab fa-facebook-f"></i> &nbsp;&nbsp;
-		<i class="fab fa-twitter"></i> &nbsp;&nbsp;
-		<i class="fab fa-google-plus-g"></i> &nbsp;&nbsp;
-		<i class="fab fa-tumblr"></i> &nbsp;&nbsp;
-		<i class="fab fa-pinterest"></i> &nbsp;&nbsp;
+			
 	</div>
-	<div class="large-1 cell"></div>
+	<div class="large-3 cell">
+		<img src="assets/images/auteur.png">
+		<h1 class="littleTopMargin">À propos</h1>
+		<p class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed libero enim sed faucibus turpis in. Nam at lectus urna duis convallis convallis. </p>
+		<span class="menuTitre tameColor bigFont"> 
+			<i class="fab fa-facebook-f"></i> &nbsp;&nbsp;
+			<i class="fab fa-instagram"></i> &nbsp;&nbsp;
+			<i class="fab fa-pinterest"></i>
+		</span>
+		
+		<h2>Posts Populaires</h2>
+		
+		<?php
+			echo "<ul class='list'>";
+				forEach($popularArticles as $popularArticle){
+					$com = ($popularArticle['nb_com'] != 1) ? "Commentaires" : "Commentaire";
+					
+					echo "<li><a href='article/".$popularArticle['id']."/".sanitize($popularArticle['title'])."/'>".$popularArticle['title']."</a>
+							<h2>".$popularArticle['nb_com']." ".$com."</h2>
+						</li>";
+				}
+			echo "</ul>";
+		?>
+		
+		<div id="banner_spot"></div>
+		
+	</div>
 </div>
 
 <div class="grid-x grid-padding-x topMargin botMargin newsletter fullpad">

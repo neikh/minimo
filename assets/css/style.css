@@ -16,6 +16,18 @@ h2{
 	margin-top: 35px;
 }
 
+.list h2{
+	color: #b4ad9e;
+	text-align: left;
+	text-transform: uppercase;
+	font-size: 15px;
+	margin-top: 5px;
+}
+
+.list a{
+	color: #626262;
+}
+
 h1{
 	color: #626262;
 	text-align: left;
@@ -25,8 +37,16 @@ h1{
 	margin-bottom: 25px;
 }
 
+ul{
+	margin-top: 25px;
+}
 
-.menutitre{
+li {
+	margin-bottom: 25px;	
+}
+
+
+.menutitre, .menutitre a{
 	font-family: playFair;
 	text-transform: uppercase;
 	color: #626262;
@@ -149,4 +169,15 @@ h1{
 
 .comments input::placeholder{
 	text-transform: uppercase;
+}
+
+
+.bigFont{
+	font-size: 20px;
+}
+
+#banner_spot{
+	width: 250px;
+	height: 250px;
+	border: solid 1px  #626262;
 }
