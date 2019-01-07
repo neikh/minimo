@@ -19,17 +19,28 @@
 			$article = '';
 			
 			if ($cat == "all"){
-				$req = "SELECT * FROM `posts` LEFT JOIN posts_posts ON posts.id = posts_posts.post_id1 WHERE `post_type` = 'article' AND `post_status` = 'publish' ORDER BY RAND() LIMIT 0,1";
+				$req = "SELECT c.`id`, c.`post_author`, c.`post_date`, c.`post_content`, c.`post_title`, c.`post_status`, c.`post_type`, c.`post_category`, c1.post_name
+						FROM `posts` c
+						LEFT JOIN posts_posts ON c.id = posts_posts.post_id1
+						LEFT JOIN `posts` c1 ON c1.id = posts_posts.post_id2 AND c1.`post_type` = 'file' 
+						WHERE c.`post_type` = 'article' AND c.`post_status` = 'publish'
+						ORDER BY RAND()
+						LIMIT 0,1";
 			} else {
-				$req = "SELECT * FROM `posts` LEFT JOIN posts_posts ON posts.id = posts_posts.post_id1 WHERE `post_type` = 'article' AND `post_status` = 'publish' AND `post_category` = '".$cat."' ORDER BY RAND() LIMIT 0,1";
+				$req = "SELECT c.`id`, c.`post_author`, c.`post_date`, c.`post_content`, c.`post_title`, c.`post_status`, c.`post_type`, c.`post_category`, c1.post_name
+						FROM `posts` c
+						LEFT JOIN posts_posts ON c.id = posts_posts.post_id1
+						LEFT JOIN `posts` c1 ON c1.id = posts_posts.post_id2 AND c1.`post_type` = 'file' 
+						WHERE c.`post_type` = 'article' AND c.`post_status` = 'publish' AND c.`post_category` = '".$cat."'
+						ORDER BY RAND()
+						LIMIT 0,1";
 			}
-
+			
 			$q = $this->_db->prepare($req);
 			$q->execute();
 
 			while ($data = $q->fetch(PDO::FETCH_ASSOC))
 			{
-				$data['post_name'] = $this->getPicture($data['post_id2']);
 				$article = new Articles($data);
 			}
 
@@ -41,9 +52,20 @@
 			$articles = [];
 			
 			if ($cat == "all"){
-				$req = "SELECT * FROM `posts` LEFT JOIN posts_posts ON posts.id = posts_posts.post_id1 WHERE `post_type` = 'article' AND `post_status` = 'publish' LIMIT ".$offset.", ".$load;
+				$req = "SELECT c.`id`, c.`post_author`, c.`post_date`, c.`post_content`, c.`post_title`, c.`post_status`, c.`post_type`, c.`post_category`, c1.post_name
+						FROM `posts` c
+						LEFT JOIN posts_posts ON c.id = posts_posts.post_id1
+						LEFT JOIN `posts` c1 ON c1.id = posts_posts.post_id2 AND c1.`post_type` = 'file' 
+						WHERE c.`post_type` = 'article' AND c.`post_status` = 'publish' 
+						LIMIT ".$offset.", ".$load;
+						
 			} else {
-				$req = "SELECT * FROM `posts` LEFT JOIN posts_posts ON posts.id = posts_posts.post_id1 WHERE `post_type` = 'article' AND `post_status` = 'publish' AND `post_category` = '".$cat."' LIMIT ".$offset.", ".$load;
+				$req = "SELECT c.`id`, c.`post_author`, c.`post_date`, c.`post_content`, c.`post_title`, c.`post_status`, c.`post_type`, c.`post_category`, c1.post_name
+						FROM `posts` c
+						LEFT JOIN posts_posts ON c.id = posts_posts.post_id1
+						LEFT JOIN `posts` c1 ON c1.id = posts_posts.post_id2 AND c1.`post_type` = 'file' 
+						WHERE c.`post_type` = 'article' AND c.`post_status` = 'publish'  AND c.`post_category` = '".$cat."'
+						LIMIT ".$offset.", ".$load;
 			}
 			
 			$q = $this->_db->prepare($req);
@@ -51,7 +73,6 @@
 
 			while ($data = $q->fetch(PDO::FETCH_ASSOC))
 			{
-				$data['post_name'] = $this->getPicture($data['post_id2']);
 				$articles[] = new Articles($data);
 				$_SESSION['loadedArticle']++;
 			}
@@ -59,33 +80,22 @@
 			return $articles;
 		}
 		
-		public function getPicture($id)
-		{
-			$article = "";
-
-			$q = $this->_db->prepare("SELECT `post_name`  FROM `posts`, posts_posts WHERE posts.id = posts_posts.post_id2 AND `post_type` = 'file' AND posts.id = :id LIMIT 0, 1");
-			$q->bindValue(":id", $id);
-			$q->execute();
-
-			while ($data = $q->fetch(PDO::FETCH_ASSOC))
-			{
-				$article = $data['post_name'];
-			}
-
-			return $article;
-		}
-		
 		public function getOtherArticles($id)
 		{
 			$articles = [];
 
-			$q = $this->_db->prepare("SELECT * FROM `posts` LEFT JOIN posts_posts ON posts.id = posts_posts.post_id1 WHERE `post_type` = 'article' AND `post_status` = 'publish' AND posts.id <> :id LIMIT 0,3");
+			$q = $this->_db->prepare("SELECT c.`id`, c.`post_author`, c.`post_date`, c.`post_content`, c.`post_title`, c.`post_status`, c.`post_type`, c.`post_category`, c1.post_name
+						FROM `posts` c
+						LEFT JOIN posts_posts ON c.id = posts_posts.post_id1
+						LEFT JOIN `posts` c1 ON c1.id = posts_posts.post_id2 AND c1.`post_type` = 'file' 
+						WHERE c.`post_type` = 'article' AND c.`post_status` = 'publish' AND c.id <> :id
+						LIMIT 0,3");
+						
 			$q->bindValue(":id", $id);
 			$q->execute();
 
 			while ($data = $q->fetch(PDO::FETCH_ASSOC))
 			{
-				$data['post_name'] = $this->getPicture($data['post_id2']);
 				$articles[] = new Articles($data);
 			}
 
@@ -96,13 +106,40 @@
 		{
 			$articles;
 
-			$q = $this->_db->prepare("SELECT * FROM `posts` LEFT JOIN posts_posts ON posts.id = posts_posts.post_id1 WHERE `post_type` = 'article' AND `post_status` = 'publish' AND posts.id = :id LIMIT 0,1");
+			$q = $this->_db->prepare("SELECT c.`id`, c.`post_author`, c.`post_date`, c.`post_content`, c.`post_title`, c.`post_status`, c.`post_type`, c.`post_category`, c1.post_name
+						FROM `posts` c
+						LEFT JOIN posts_posts ON c.id = posts_posts.post_id1
+						LEFT JOIN `posts` c1 ON c1.id = posts_posts.post_id2 AND c1.`post_type` = 'file' 
+						WHERE c.`post_type` = 'article' AND c.`post_status` = 'publish' AND c.id = :id
+						LIMIT 0,1");
+						
 			$q->bindValue(":id", $id);
 			$q->execute();
 
 			while ($data = $q->fetch(PDO::FETCH_ASSOC))
 			{
-				$data['post_name'] = $this->getPicture($data['post_id2']);
+				$articles = new Articles($data);
+			}
+
+			return $articles;
+		}
+		
+		public function getPage($title)
+		{
+			$articles;
+
+			$q = $this->_db->prepare("SELECT c.`id`, c.`post_author`, c.`post_date`, c.`post_content`, c.`post_title`, c.`post_status`, c.`post_type`, c.`post_category`, c1.post_name
+						FROM `posts` c
+						LEFT JOIN posts_posts ON c.id = posts_posts.post_id1
+						LEFT JOIN `posts` c1 ON c1.id = posts_posts.post_id2 AND c1.`post_type` = 'file' 
+						WHERE c.`post_type` = 'page' AND c.`post_status` = 'publish' AND c.post_title = :title
+						LIMIT 0,1");
+						
+			$q->bindValue(":title", $title);
+			$q->execute();
+
+			while ($data = $q->fetch(PDO::FETCH_ASSOC))
+			{
 				$articles = new Articles($data);
 			}
 

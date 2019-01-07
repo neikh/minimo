@@ -69,3 +69,38 @@
 
 		require "view/update/addNewComment.php";
 	}
+	
+	function loadPage($page){
+		$articlesRepository = databaseConnect("ArticlesRepository");
+		
+		$otherArticles = $articlesRepository->getOtherArticles(1);
+		$category = $articlesRepository->getCategory();
+		
+		if ($page == "legal"){
+			$article = $articlesRepository->getPage('Mentions Légales');
+		}
+		
+		if ($page == "contact"){
+			$article = $articlesRepository->getPage('Contact');
+		}
+
+		require "view/frontend/viewPage.php";
+	}
+	
+	function sendContact($com, $name, $mail){
+		$contactRepository = databaseConnect("ContactRepository");
+		
+		if ($com != '' AND $name != ''){
+			
+			if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+				$sendContact = $contactRepository->addContact($com, $name, $mail);
+			} else {
+				$sendContact = "<img src='/assets/images/invalid.png' width='250'><br />Non, ce n'est pas votre adresse e-mail. Recommencez.";
+			}
+			
+		} else {
+			$sendContact = "<img src='/assets/images/invalid.png' width='250'><br />Erreur. Veuillez bien remplir les champs noms et commentaires.";
+		}
+
+		require "view/update/sendContact.php";
+	}

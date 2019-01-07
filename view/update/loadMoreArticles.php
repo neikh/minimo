@@ -11,10 +11,16 @@
 						
 		}
 		
-		echo '<div class="large-5 cell">
-					<a href="article/'.$article->id().'/'.sanitize($article->post_title()).'/">
-						<img src="assets/images/'.$article->post_name().'">
+		echo '<div class="large-5 cell">';
+		
+					if ($article->post_name() != NULL){
+						echo '<a href="article/'.$article->id().'/'.sanitize($article->post_title()).'/"><img src="assets/images/'.$article->post_name().'"></a>';
+					}
+					
+					echo'<a href="category/'.$article->post_category().'/">
 						<h2>'.$article->post_category().'</h2>
+					</a>
+					<a href="article/'.$article->id().'/'.sanitize($article->post_title()).'/">
 						<h1>'.$article->post_title().'</h1>
 						<p class="content">'.substr($article->post_content(), 0, 150).'...</p>
 					</a>
@@ -33,4 +39,3 @@
 	if ($i == 1){
 		echo '</div>';
 	}
-?>

@@ -27,6 +27,16 @@
 				} else {
 					addNewComment('', '', $postId);
 				}
+			} elseif($_POST['action'] == "sendContact"){
+				$com = (string)$_POST['com'];
+				$name = (string)$_POST['name'];
+				$mail = (string)$_POST['mail'];
+				
+				if (is_string($com) AND is_string($name) AND is_string($mail) AND $name != '' AND $com != '' AND $mail != ''){
+					sendContact($com, $name, $mail);
+				} else {
+					sendContact('','','');
+				}
 			}
 			
 		} elseif (isset($_GET['page'])) {
@@ -44,6 +54,14 @@
 				if (is_string($cat)){
 					loadIndex($cat);
 				}
+			}  elseif ($_GET['page'] == "legal"){
+				
+				loadPage('legal');
+				
+			}  elseif ($_GET['page'] == "contact"){
+				
+				loadPage('contact');
+				
 			}
 			
 		} else {

@@ -7,9 +7,13 @@
 
 <div class="grid-x grid-padding-x">
 	<div class="large-12 cell">
-	    <a href="article/<?= $featuredArticle->id().'/'.sanitize($featuredArticle->post_title()) ?>/">
-			<p class="fullDiv eCenter"><img src="assets/images/<?= $featuredArticle->post_name(); ?>" width="100%"></p>
-		</a>
+		<?php
+			if ($featuredArticle->post_name() != NULL){
+				echo'<a href="article/'.$featuredArticle->id().'/'.sanitize($featuredArticle->post_title()).'/">
+						<p class="fullDiv eCenter"><img src="assets/images/'.$featuredArticle->post_name().'" width="100%"></p>
+					</a>';
+			}
+		?>
 	</div>
 </div>
 			
@@ -38,11 +42,13 @@
 						
 		}
 		
-		echo '<div class="large-5 cell">
-					<a href="article/'.$article->id().'/'.sanitize($article->post_title()).'/">
-						<img src="assets/images/'.$article->post_name().'">
-					</a>
-					<a href="category/'.$article->post_category().'/">
+		echo '<div class="large-5 cell">';
+					
+				if ($article->post_name() != NULL){
+					echo '<a href="article/'.$article->id().'/'.sanitize($article->post_title()).'/"><img src="assets/images/'.$article->post_name().'"></a>';
+				}
+
+				echo'<a href="category/'.$article->post_category().'/">
 						<h2>'.$article->post_category().'</h2>
 					</a>
 					<a href="article/'.$article->id().'/'.sanitize($article->post_title()).'/">	
