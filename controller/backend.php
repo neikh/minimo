@@ -56,8 +56,9 @@
 			
 			if ($_SESSION['user'] == "admin"){
 				$articlesRepository = databaseConnect("ArticlesRepository");
+				$categoryRepository = databaseConnect("CategoryRepository");
 				
-				$category = $articlesRepository->getCategory();
+				$category = $categoryRepository->getCategory();
 				$articles = $articlesRepository->getListArticles('all', 0, 300, 'DESC');
 	
 				require "view/backend/viewCategory.php";
@@ -74,10 +75,11 @@
 	
 	function moveArticles($id, $cat){
 		$articlesRepository = databaseConnect("ArticlesRepository");
+		$categoryRepository = databaseConnect("CategoryRepository");
 		
 		$moved = $articlesRepository->moveArticle($id, $cat);
 		
-		$category = $articlesRepository->getCategory();
+		$category = $categoryRepository->getCategory();
 		$articles = $articlesRepository->getListArticles('all', 0, 300, 'DESC');
 		
 		require "view/update/moveArticles.php";

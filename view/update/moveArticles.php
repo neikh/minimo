@@ -9,10 +9,14 @@
 	
 	
 	foreach($category as $cat){
-		echo '<div class="large-4 medium-4 small-4 cell"><table id="'.$cat.'"><thead><tr><th>'.ucfirst($cat).'</th></tr></thead><tbody id="'.$cat.'Element">';
+		echo '<div class="large-4 medium-4 small-4 cell"><table id="'.$cat->category_name().'"><thead><tr><th>'.ucfirst($cat->category_name()).'</th></tr></thead><tbody id="'.$cat->category_name().'Element">';
 		
-		foreach ($cats[$cat] as $key => $c){
-			echo '<tr draggable="true" id="'.$key.'"><td>'.$c.'</td></tr>';
+		if (isset($cats[$cat->category_name()])){
+			foreach ($cats[$cat->category_name()] as $key => $c){
+				echo '<tr draggable="true" id="'.$key.'"><td>'.$c.'</td></tr>';
+			}
+		} else {
+			echo '<tr><td class="eCenter">Vide</td></tr>';
 		}
 		
 		echo'</tbody></table></div>';

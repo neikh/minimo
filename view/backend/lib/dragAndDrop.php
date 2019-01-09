@@ -1,28 +1,33 @@
 <script>
+	function handlers(){
 <?php
 		foreach($category as $cat){
 		?>
-		
-			var <?= $cat; ?>= document.querySelector('#<?= $cat; ?>');
-			var <?= $cat.'Element'; ?>= document.querySelector('#<?= $cat; ?>');
+			if (document.querySelector('#<?= $cat->category_name(); ?>')){
+				var <?= $cat->category_name(); ?>= document.querySelector('#<?= $cat->category_name(); ?>');
+			}
 			
-			<?= $cat; ?>.addEventListener('dragover', function(e) {
+			if (document.querySelector('#<?= $cat->category_name(); ?>')){
+				var <?= $cat->category_name().'Element'; ?>= document.querySelector('#<?= $cat->category_name(); ?>');
+			}
+			
+			<?= $cat->category_name(); ?>.addEventListener('dragover', function(e) {
 				e.preventDefault(); // Annule l'interdiction de drop
 			});
 			
-			<?= $cat; ?>.addEventListener('dragenter', function() {
-				<?= $cat; ?>.style.borderStyle = 'solid';
+			<?= $cat->category_name(); ?>.addEventListener('dragenter', function() {
+				<?= $cat->category_name(); ?>.style.borderStyle = 'solid';
 			});
 			
-			<?= $cat; ?>.addEventListener('dragleave', function() {
-				<?= $cat; ?>.style.borderStyle = 'dotted';
+			<?= $cat->category_name(); ?>.addEventListener('dragleave', function() {
+				<?= $cat->category_name(); ?>.style.borderStyle = 'dotted';
 			});
 			
 			document.addEventListener('dragend', function() {
 				//console.log("Un Drag & Drop vient de se terminer mais l'événement dragend ne sait pas si c'est un succès ou non.");
 			});
 			
-			<?= $cat; ?>.addEventListener('drop', function(e) {
+			<?= $cat->category_name(); ?>.addEventListener('drop', function(e) {
 				e.preventDefault(); // Cette méthode est toujours nécessaire pour éviter une éventuelle redirection inattendue
 				//console.log(e.dataTransfer.getData('text/plain'));
 				
@@ -36,6 +41,7 @@
 					if(xhr.readyState == 4 && xhr.status == 200)
 					{
 						document.getElementById('identification').innerHTML = xhr.response;
+						handlers();
 					}
 				}
 				
@@ -46,28 +52,31 @@
 				var element = document.getElementById(e.dataTransfer.getData('text/plain'));
 				element.parentNode.removeChild(element);
 				
-				if (<?= $cat.'Element'; ?>.innerHTML != ''){
-					<?= $cat.'Element'; ?>.innerHTML += response;
+				if (<?= $cat->category_name().'Element'; ?>.innerHTML != ''){
+					<?= $cat->category_name().'Element'; ?>.innerHTML += response;
 				} else {
-					<?= $cat.'Element'; ?>.innerHTML = response;
+					<?= $cat->category_name().'Element'; ?>.innerHTML = response;
 				}
 
-				<?= $cat; ?>.style.borderStyle = 'dotted';
+				<?= $cat->category_name(); ?>.style.borderStyle = 'dotted';
 			});
 			
 		<?php
-			foreach ($cats[$cat] as $key => $c){
+			if (isset($cats[$cat->category_name()])){
+				foreach ($cats[$cat->category_name()] as $key => $c){
 		?>
 		
-			document.querySelector("[id='<?= $key ?>']").addEventListener('dragstart', function(e) {
-				e.dataTransfer.setData("Text/plain", e.target.id);
-			});
+				document.querySelector("[id='<?= $key ?>']").addEventListener('dragstart', function(e) {
+					e.dataTransfer.setData("Text/plain", e.target.id);
+				});
 			
 		<?php
+				}
 			}
-			
 		}
 		
 	?>
-
+	}
+	
+	handlers();
 </script>
