@@ -70,3 +70,15 @@
 			require "view/backend/viewIdentification.php";
 		}
 	}
+	
+	
+	function moveArticles($id, $cat){
+		$articlesRepository = databaseConnect("ArticlesRepository");
+		
+		$moved = $articlesRepository->moveArticle($id, $cat);
+		
+		$category = $articlesRepository->getCategory();
+		$articles = $articlesRepository->getListArticles('all', 0, 300, 'DESC');
+		
+		require "view/update/moveArticles.php";
+	}

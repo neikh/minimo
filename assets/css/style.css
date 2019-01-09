@@ -54,6 +54,9 @@ li {
 	border: dotted 2px #b4ad9e;
 }
 
+#identification tbody{
+	height: 30px;
+}
 
 .menutitre, .menutitre a{
 	font-family: playFair;
@@ -248,5 +251,6 @@ input[type=button], input[type=submit], input[type=reset]{
 	border: 0;
 	border-bottom: solid 2px #b4ad9e;
 	background-color: #f8f8f8;
-	box-shadow: 0;
+	box-shadow: none;
+	-webkit-box-shadow: none;
 }

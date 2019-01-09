@@ -185,4 +185,13 @@
 			return $cat;
 		}
 		
+		public function moveArticle($id, $cat){
+			$q = $this->_db->prepare("UPDATE `posts` SET `post_category` = :cat WHERE `id` = :id");
+			$q->bindValue(":id", $id);
+			$q->bindValue(":cat", $cat);
+			$q->execute();
+			
+			return "done";
+		}
+
 	}

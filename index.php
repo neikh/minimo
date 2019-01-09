@@ -47,6 +47,21 @@
 				} else {
 					login();
 				}
+			} elseif($_POST['action'] == "createCat"){
+				$cat = (string)$_POST['cat'];
+				
+				if ($cat != ''){
+					createCat($cat);
+				} else {
+					createCat();
+				}
+			} elseif($_POST['action'] == "moveArticles"){
+				$id = (int)$_POST['id'];
+				$cat = (string)$_POST['cat'];
+				
+				if (is_string($cat) AND is_int($id) AND $id > 0){
+					moveArticles($id, $cat);
+				}
 			}
 			
 		} elseif (isset($_GET['page'])) {

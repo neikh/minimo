@@ -168,3 +168,13 @@ function login(){
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	xhr.send("action=login&login="+login+"&pass="+pass);
 }
+
+function createCat(){
+	xhr = new XMLHttpRequest();
+	
+	var newCat = document.getElementById("addCategory").value;
+	
+	xhr.open("POST",'index.php',true);
+	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	xhr.send("action=createCat&cat="+newCat);
+}
