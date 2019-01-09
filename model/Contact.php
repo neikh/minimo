@@ -59,7 +59,7 @@
 		public function setContact_name($name){
 			$name = (string)$name;
 			
-			if (is_string($name) AND $name > 0){
+			if (is_string($name)){
 				$this->_contact_name = $name;
 			}
 		}
@@ -67,7 +67,7 @@
 		public function setContact_email($email){
 			$email = (string)$email;
 			
-			if (is_string($email) AND $email > 0){
+			if (is_string($email)){
 				$this->_contact_email = $email;
 			}
 		}
@@ -75,7 +75,7 @@
 		public function setContact_message($message){
 			$message = (string)$message;
 			
-			if (is_string($message) AND $message > 0){
+			if (is_string($message)){
 				$this->_contact_message = $message;
 			}
 		}

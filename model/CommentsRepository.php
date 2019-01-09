@@ -34,16 +34,33 @@
 		{
 			$coms = [];
 
-			$q = $this->_db->prepare("SELECT * FROM `comments` WHERE `post_id` = :id");
-			$q->bindValue(":id", $id);
-			$q->execute();
+			if ($id != 0){
+				$req = "SELECT * FROM `comments` WHERE `post_id` = :id";
+			
+				$q = $this->_db->prepare($req);
+				$q->bindValue(":id", $id);
+				$q->execute();
 
-			while ($data = $q->fetch(PDO::FETCH_ASSOC))
-			{
-				$coms[] = new Comments($data);
+				while ($data = $q->fetch(PDO::FETCH_ASSOC))
+				{
+					$coms[] = new Comments($data);
+				}
+
+				return $coms;
+				
+			} else {
+				$req = "SELECT `posts`.`id`, `comment_name`, `comment_content`, `comment_date`, `post_title` FROM `comments`, `posts` WHERE `comments`.`post_id` = `posts`.`id` ORDER BY `comment_date` DESC LIMIT 0,10";
+				
+				$q = $this->_db->prepare($req);
+				$q->execute();
+
+				while ($data = $q->fetch(PDO::FETCH_ASSOC))
+				{
+					$coms[] = $data;
+				}
+
+				return $coms;
 			}
-
-			return $coms;
 		}
 		
 		public function addComment($com, $name, $postId)

@@ -26,4 +26,20 @@
 			
 			return "<img src='/assets/images/valid.png' width='250'><br />Votre message à bien été envoyé.";
 		}
+		
+		public function getContact($load = 10){
+			
+			$contacts = [];
+			
+			$req = "SELECT * FROM contact ORDER BY contact_date DESC LIMIT 0,".$load;
+			$q = $this->_db->prepare($req);
+			$q->execute();
+			
+			while ($data = $q->fetch(PDO::FETCH_ASSOC))
+			{
+				$contacts[] = new Contact($data);
+			}
+			
+			return $contacts;
+		}
 	}

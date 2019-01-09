@@ -47,7 +47,7 @@
 			return $article;
 		}
 		
-		public function getListArticles($cat, $offset = 0, $load = 2)
+		public function getListArticles($cat, $offset = 0, $load = 2, $order = "DESC")
 		{
 			$articles = [];
 			
@@ -57,6 +57,7 @@
 						LEFT JOIN posts_posts ON c.id = posts_posts.post_id1
 						LEFT JOIN `posts` c1 ON c1.id = posts_posts.post_id2 AND c1.`post_type` = 'file' 
 						WHERE c.`post_type` = 'article' AND c.`post_status` = 'publish' 
+						ORDER BY c.`post_date` ".$order."
 						LIMIT ".$offset.", ".$load;
 						
 			} else {
@@ -65,6 +66,7 @@
 						LEFT JOIN posts_posts ON c.id = posts_posts.post_id1
 						LEFT JOIN `posts` c1 ON c1.id = posts_posts.post_id2 AND c1.`post_type` = 'file' 
 						WHERE c.`post_type` = 'article' AND c.`post_status` = 'publish'  AND c.`post_category` = '".$cat."'
+						ORDER BY c.`post_date` ".$order."
 						LIMIT ".$offset.", ".$load;
 			}
 			
@@ -74,7 +76,11 @@
 			while ($data = $q->fetch(PDO::FETCH_ASSOC))
 			{
 				$articles[] = new Articles($data);
+				if(!isset($_SESSION['loadedArticle'])){
+					$_SESSION['loadedArticle'] = 0;
+				}
 				$_SESSION['loadedArticle']++;
+				
 			}
 
 			return $articles;

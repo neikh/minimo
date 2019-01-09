@@ -24,6 +24,7 @@
 		<a href="article/<?= $featuredArticle->id().'/'.sanitize($featuredArticle->post_title()) ?>/">
 			<h1><?= $featuredArticle->post_title(); ?></h1>
 			<p class="content"><?= substr($featuredArticle->post_content(), 0, 350).'...'; ?></p>
+			
 			<h2>Leave a comment</h2>
 		</a>
 	</div>

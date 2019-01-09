@@ -143,5 +143,28 @@ function sendContact(){
 	xhr.open("POST",'index.php',true);
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	xhr.send("action=sendContact&com="+com+"&name="+name+"&mail="+mail);
+}
+
+function login(){
+	xhr = new XMLHttpRequest();
+
+	xhr.onreadystatechange = function(){
+		if (xhr.readyState == 4 && xhr.status == 200){
+			document.getElementById('identification').innerHTML = xhr.response;
+			setTimeout(function(){
+				fade(document.getElementById('identification'));
+			}, 2000);
+			
+			setTimeout(function(){
+				window.location.href = "admin/";
+			}, 3000);
+		}
+	}
 	
+	var login = document.getElementById("login").value;
+	var pass = document.getElementById("pass").value;
+	
+	xhr.open("POST",'index.php',true);
+	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	xhr.send("action=login&login="+login+"&pass="+pass);
 }

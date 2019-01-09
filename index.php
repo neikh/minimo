@@ -1,5 +1,6 @@
 <?php
 	require "controller/frontend.php";
+	require "controller/backend.php";
 	
 	try {
 
@@ -37,6 +38,15 @@
 				} else {
 					sendContact('','','');
 				}
+			} elseif($_POST['action'] == "login"){
+				$login = $_POST['login'];
+				$pass = $_POST['pass'];
+				
+				if ($login != '' AND $pass != ''){
+					login($login, $pass);
+				} else {
+					login();
+				}
 			}
 			
 		} elseif (isset($_GET['page'])) {
@@ -54,14 +64,20 @@
 				if (is_string($cat)){
 					loadIndex($cat);
 				}
-			}  elseif ($_GET['page'] == "legal"){
-				
-				loadPage('legal');
+			}  elseif ($_GET['page'] == "legal"){		
+				loadPage('legal');	
 				
 			}  elseif ($_GET['page'] == "contact"){
-				
 				loadPage('contact');
 				
+			} elseif ($_GET['page'] == "admin"){
+				loadAdmin();
+				
+			} elseif ($_GET['page'] == "kill"){
+				loadDeco();
+				
+			} elseif ($_GET['page'] == "category"){
+				loadCat();
 			}
 			
 		} else {
