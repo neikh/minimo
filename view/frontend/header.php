@@ -7,9 +7,9 @@
 	  <div class="large-8 medium-8 small-8 cell">
 		<div class="grid-x grid-padding-x">
 			<?php
-				for($i = 0; $i < count($category); $i++){
+				foreach ($category as $cat){
 					echo ' <div class="large-3 medium-3 small-3 cell">
-								<p class="menuTitre"><a href="category/'.$category[$i].'/">'.$category[$i].'</a></p>
+								<p class="menuTitre"><a href="category/'.$cat->category_name().'/">'.$cat->category_name().'</a></p>
 							</div>';
 				}
 			?>

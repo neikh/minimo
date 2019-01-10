@@ -4,7 +4,14 @@
 	
 	try {
 
-		if (isset($_POST['action'])){
+		if (count($_FILES) != 0){
+			if (isset($_FILES['pic'])){
+				$pic = $_FILES['pic'];
+				
+				uploadFile($pic);
+			}
+			
+		} elseif (isset($_POST['action'])){
 			
 			if ($_POST['action'] == "loadMoreArticles"){
 				$cat = (string)$_POST['cat'];
@@ -55,6 +62,23 @@
 				} else {
 					createCat();
 				}
+			} elseif($_POST['action'] == "deleteCat"){
+				$cat = (int)$_POST['cat'];
+				
+				if (is_int($cat) AND $cat != ''){
+					deleteCat($cat);
+				} else {
+					deleteCat();
+				}
+			} elseif($_POST['action'] == "renameCategory"){
+				$id = (int)$_POST['id'];
+				$newName = (string)$_POST['newName'];
+				
+				if (is_int($id) AND $id != '' AND $newName != ''){
+					renameCat($id, $newName);
+				} else {
+					renameCat();
+				}
 			} elseif($_POST['action'] == "moveArticles"){
 				$id = (int)$_POST['id'];
 				$cat = (string)$_POST['cat'];
@@ -93,6 +117,9 @@
 				
 			} elseif ($_GET['page'] == "category"){
 				loadCat();
+				
+			} elseif ($_GET['page'] == "posts"){
+				loadPost();
 			}
 			
 		} else {

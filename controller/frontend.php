@@ -9,9 +9,10 @@
 	
 	function loadIndex($cat = 'all'){
 		$articlesRepository = databaseConnect("ArticlesRepository");
+		$categoryRepository = databaseConnect("CategoryRepository");
 		
 		$_SESSION['loadedArticle'] = 0;
-		$category = $articlesRepository->getCategory();
+		$category = $categoryRepository->getCategory();
 		$featuredArticle = $articlesRepository->getFeaturedArticle($cat);
 		$articles = $articlesRepository->getListArticles($cat);
 		require "view/frontend/viewIndex.php";
@@ -44,8 +45,9 @@
 	function loadArticle($id){
 		$articlesRepository = databaseConnect("ArticlesRepository");
 		$commentsRepository = databaseConnect("CommentsRepository");
+		$categoryRepository = databaseConnect("CategoryRepository");
 		
-		$category = $articlesRepository->getCategory();
+		$category = $categoryRepository->getCategory();
 		$article = $articlesRepository->getArticle($id);
 		$otherArticles = $articlesRepository->getOtherArticles($id);
 		$popularArticles = $articlesRepository->getPopularArticles();
@@ -72,9 +74,10 @@
 	
 	function loadPage($page){
 		$articlesRepository = databaseConnect("ArticlesRepository");
+		$categoryRepository = databaseConnect("CategoryRepository");
 		
 		$otherArticles = $articlesRepository->getOtherArticles(1);
-		$category = $articlesRepository->getCategory();
+		$category = $categoryRepository->getCategory();
 		
 		if ($page == "legal"){
 			$article = $articlesRepository->getPage('Mentions Légales');

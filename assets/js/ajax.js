@@ -1,3 +1,6 @@
+var progressBar = document.getElementById("progress");
+var loadBtn = document.getElementById("startUpload");
+
 function articleLoader(cat){
 	xhr = new XMLHttpRequest();
 	
@@ -172,9 +175,109 @@ function login(){
 function createCat(){
 	xhr = new XMLHttpRequest();
 	
+	xhr.onreadystatechange = function(){
+		if (xhr.readyState == 4 && xhr.status == 200){
+			document.getElementById('identification').innerHTML = xhr.response;
+			window.location.href = "admin/category/";
+		}
+	}
+	
 	var newCat = document.getElementById("addCategory").value;
 	
 	xhr.open("POST",'index.php',true);
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	xhr.send("action=createCat&cat="+newCat);
 }
+
+function deleteCat(cat){
+	xhr = new XMLHttpRequest();
+	
+	xhr.onreadystatechange = function(){
+		if (xhr.readyState == 4 && xhr.status == 200){
+			document.getElementById('identification').innerHTML = xhr.response;
+			window.location.href = "admin/category/";
+		}
+	}
+	
+	xhr.open("POST",'index.php',true);
+	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	xhr.send("action=deleteCat&cat="+cat);
+}
+
+function renameCategory(id, newName){
+ 
+	if (event.key == "Enter"){
+		xhr = new XMLHttpRequest();
+		 
+		xhr.onreadystatechange = function()
+		{
+			if (xhr.readyState == 4 && xhr.status == 200)
+			{
+				document.getElementById('identification').innerHTML = xhr.response;
+				window.location.href = "admin/category/";
+			}
+		}
+		 
+		xhr.open("POST",'index.php',true);
+		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		xhr.send("action=renameCategory&id="+id+"&newName="+newName);
+	}
+}
+
+function uploadFile(data){
+	xhr = new XMLHttpRequest();
+	xhr.open("POST",'index.php',true);
+	
+	
+	xhr.onreadystatechange = function()
+	{
+		if (xhr.readyState == 4 && xhr.status == 200)
+		{
+			document.getElementById('upload').innerHTML = xhr.response;
+		}
+	}
+	
+	if (xhr.upload) {
+		xhr.upload.onprogress = function (e) {
+			if (e.lengthComputable) {
+				progressBar.max = e.total;
+				progressBar.value = e.loaded;
+				display.innerText = Math.floor((e.loaded / e.total) * 100) + '%';
+			}
+			
+		}
+		xhr.upload.onloadstart = function (e) {
+			progressBar.value = 0;
+			display.innerText = '0%';
+			console.log("start");
+		}
+		xhr.upload.onloadend = function (e) {
+			progressBar.value = e.loaded;
+			loadBtn.disabled = false;
+			loadBtn.innerHTML = 'Start uploading';
+		}
+		
+		xhr.send(data);
+	}
+	
+}
+
+function buildFormData() {
+	
+	file = document.getElementById('fileToUpload').files[0];
+	if(file)
+    {
+		var fd = new FormData();
+		fd.append('pic', file);
+	}
+
+console.log(fd);
+  return fd;
+}
+
+loadBtn.addEventListener("click", function(e) {
+  this.disabled = true;
+  this.innerHTML = "Uploading...";
+  uploadFile(buildFormData());
+});
+

@@ -8,6 +8,7 @@ RewriteEngine on
 Options +FollowSymlinks
 
 RewriteRule   admin/category/						  index.php?page=category	[L]
+RewriteRule   admin/posts/						  	  index.php?page=posts	[L]
 RewriteRule   article/([0-9]+)/([a-zA-Z0-9]+)         index.php?page=article&article=$1&nom=$2	[L]
 RewriteRule   category/([a-zA-Z]+)/        			  index.php?page=index&cat=$1	[L]
 RewriteRule   contact/       			  			  index.php?page=contact	[L]

@@ -9,12 +9,19 @@
 	foreach($articles as $article){
 		$cats[$article->post_category()][$article->id()] = $article->post_title();
 	}
+	
 ?>
 
 <div class="grid-x grid-padding-x topMargin" id="identification">
 	<?php
 		foreach($category as $cat){
-			echo '<div class="large-4 medium-4 small-4 cell"><table id="'.$cat->category_name().'"><thead><tr><th>'.ucfirst($cat->category_name()).'</th></tr></thead><tbody id="'.$cat->category_name().'Element">';
+			echo '<div class="large-4 medium-4 small-4 cell"><table id="'.str_replace(" ", "_", $cat->category_name()).'"><thead><tr><th><input type="text" id="rn'.str_replace(" ", "_", $cat->category_name()).'" class="renameCategory" value="'.ucfirst($cat->category_name()).'" onkeyup="renameCategory('.$cat->id_category().', this.value); return false" DISABLED><span class="right"><i class="fas fa-pencil-alt pointer" onclick="enable(\'rn'.str_replace(" ", "_", $cat->category_name()).'\'); return false"></i>';
+			
+			if (!isset($cats[$cat->category_name()])){
+				echo '&nbsp;&nbsp;&nbsp;<i class="fas fa-trash-alt pointer" onclick="deleteCat(\''.$cat->id_category().'\', \''.$cat->category_name().'\'); return false"></i>';
+			}
+			
+			echo '</span></th></tr></thead><tbody id="'.$cat->category_name().'Element">';
 			
 			if (isset($cats[$cat->category_name()])){
 				foreach ($cats[$cat->category_name()] as $key => $c){
@@ -34,7 +41,7 @@
 			<thead>	
 				<tr>
 					<th>
-						<i class="far fa-plus-square bigFont pointer" onclick="createCat(); return false"></i><input type="text" id="addcategory" placeholder="Créer une nouvelle catégorie">
+						<i class="far fa-plus-square bigFont pointer" onclick="createCat(); return false"></i><input type="text" id="addCategory" placeholder="Créer une nouvelle catégorie">
 					</th>
 				</tr>
 			</thead>
@@ -42,7 +49,7 @@
 			</tbody>
 		</table>
 	</div>
-	
+	<script src="assets/js/dragAndDrop.js"></script>
 </div>
 
 <?php

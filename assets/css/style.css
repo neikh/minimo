@@ -254,3 +254,34 @@ input[type=button], input[type=submit], input[type=reset]{
 	box-shadow: none;
 	-webkit-box-shadow: none;
 }
+
+.renameCategory:disabled{
+	width: 75%;
+	display: inline;
+	height: 25px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background-color: #f8f8f8;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	font-weight: bold;
+	cursor: default;
+}
+
+.renameCategory{
+	width: 75%;
+	display: inline;
+	height: 25px;
+	margin: 0;
+	padding: 5px;
+	font-weight: bold;
+}
+
+.right{
+	float: right;
+}
+
+.margin-right{
+	margin-right: 10px;
+}
