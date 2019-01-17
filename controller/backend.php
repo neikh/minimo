@@ -133,13 +133,25 @@
 		require "view/update/moveArticles.php";
 	}
 	
-	function loadPost(){
+	function loadPost($article){
 		if (isset($_SESSION['user'])){
 			
 			if ($_SESSION['user'] == "admin"){
-	
 				
-	
+				$categoryRepository = databaseConnect("CategoryRepository");
+				$articlesRepository = databaseConnect("ArticlesRepository");
+				
+				$category = $categoryRepository->getCategory();
+				if ($article != 0){
+					unset($_SESSION['temp']);
+					$articleToLoad = $articlesRepository->getArticle($article);
+					$_SESSION['temp']['title'] = $articleToLoad->post_title();
+					$_SESSION['temp']['article'] = $articleToLoad->post_content();
+					$_SESSION['temp']['photo']= 'assets/images/'.$articleToLoad->post_name();
+					
+					$_SESSION['temp']['category'] = $articleToLoad->post_category();
+				}
+				
 				require "view/backend/viewPosts.php";
 			} else {
 				
@@ -173,8 +185,8 @@
 			$uploadOk = 0;
 		}
 		
-		if ($pic["size"] > 500000) {
-			$erreur = "Votre fichier est trop gros (500ko max!).<br />";
+		if ($pic["size"] > 500000000) {
+			$erreur = "Votre fichier est trop gros (500mo max!).<br />";
 			$uploadOk = 0;
 		}
 		
@@ -189,10 +201,52 @@
 		} else {
 			if (move_uploaded_file($pic["tmp_name"], $target_file)) {
 				$erreur = "Votre fichier a bien été uploadé.";
+				$photo = $target_file;
 			} else {
 				$erreur = "Il y a eu une erreur en uploadant votre fichier...";
 			}
 		}
 		unset($_FILES);
 		require "view/update/uploadFile.php";
+	}
+	
+	function save($title, $article, $cat, $pic, $state, $id){
+		
+		if ($state == 0){
+			$_SESSION['temp']['title'] = trim($title);
+			$_SESSION['temp']['article'] = trim($article);
+			$_SESSION['temp']['category'] = trim($cat);
+		} else {
+			
+			if ($id == 0){
+				$articlesRepository = databaseConnect("ArticlesRepository");
+				$categoryRepository = databaseConnect("CategoryRepository");
+				
+				$category = $categoryRepository->getCategory($cat);
+				
+				if (!isset($category)){
+					$category = $categoryRepository->addCategory($cat);
+					$category = $categoryRepository->getCategory($cat);
+				}
+				
+				$pic_tab = explode("/", $pic);
+				$pic = $pic_tab[2];
+				
+				$lastId1 = $articlesRepository->saveArticle($title, $article, $category->id_category());
+				$lastId2 = $articlesRepository->saveFile($pic, $title);
+				
+				$finalInsert = $articlesRepository->linking($lastId1, $lastId2);
+
+				echo $lastId1;
+			} else {
+				$articlesRepository = databaseConnect("ArticlesRepository");
+				$categoryRepository = databaseConnect("CategoryRepository");
+				
+				$category = $categoryRepository->getCategory($cat);
+				
+				$lastId1 = $articlesRepository->updateArticle($title, $article, $category->id_category(), $id);
+				echo $id;
+			}
+			
+		}
 	}

@@ -47,7 +47,7 @@
 			$q->bindValue(":cat", $cat);
 			$q->execute();
 			
-			return "done";
+			return $q->lastInsertId();
 		}
 		
 		public function delCategory($cat){

@@ -86,6 +86,17 @@
 				if (is_string($cat) AND is_int($id) AND $id > 0){
 					moveArticles($id, $cat);
 				}
+			} elseif($_POST['action'] == "save"){
+				$title = (string)$_POST['title'];
+				$article = (string)$_POST['newArticle'];
+				$cat = (string)$_POST['cat'];
+				$pic = (string)$_POST['pic'];
+				$state = (int)$_POST['state'];
+				$id = (int)$_POST['id'];
+				
+				if (is_string($title) AND is_string($article) AND is_string($cat) AND is_string($pic) AND is_int($state) AND is_int($id)){
+					save($title, $article, $cat, $pic, $state, $id);
+				}
 			}
 			
 		} elseif (isset($_GET['page'])) {
@@ -119,7 +130,14 @@
 				loadCat();
 				
 			} elseif ($_GET['page'] == "posts"){
-				loadPost();
+				
+				if (isset($_GET['article'])) {
+					$article = $_GET['article'];
+				} else {
+					$article = 0;
+				}
+				
+				loadPost($article);
 			}
 			
 		} else {

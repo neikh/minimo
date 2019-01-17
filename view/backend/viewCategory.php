@@ -49,7 +49,6 @@
 			</tbody>
 		</table>
 	</div>
-	<script src="assets/js/dragAndDrop.js"></script>
 </div>
 
 <?php

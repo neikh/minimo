@@ -9,12 +9,9 @@ function enable(id){
 		}
 		document.getElementById(id).disabled = false;
 	} else {
+		document.getElementById(id).disabled = true;
 	}
 }
 
-bkLib.onDomLoaded(function(){
 
-	  new nicEditor({fullPanel : true}).panelInstance('newArticle');
-
-});
 

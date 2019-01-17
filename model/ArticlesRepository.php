@@ -190,5 +190,51 @@
 			
 			return "done";
 		}
+		
+		public function saveArticle($titre, $article, $cat_id){
+			$titre_alt = str_replace(" ","_", $titre);
+			
+			$q = $this->_db->prepare("INSERT INTO `posts` (`id`, `post_author`, `post_date`, `post_content`, `post_title`, `post_status`, `post_name`, `post_type`, `id_category`) VALUES (NULL, 1, NOW(), :article, :titre, 'publish', :titre_alt, 'article', :id)");
+			$q->bindValue(":article", $article);
+			$q->bindValue(":titre", $titre);
+			$q->bindValue(":titre_alt", $titre_alt);
+			$q->bindValue(":id", $cat_id);
+			$q->execute();
+			
+			return $this->_db->lastInsertId();
+		}
+		
+		public function saveFile($pic, $title){
+			
+			$title = "Image principale pour l'article ".$title;
+			
+			$q = $this->_db->prepare("INSERT INTO `posts` (`id`, `post_author`, `post_date`, `post_content`, `post_title`, `post_status`, `post_name`, `post_type`, `id_category`) VALUES (NULL, 1, NULL, '', :title, 'publish', :pic, 'file', NULL)");
+			$q->bindValue(":title", $title);
+			$q->bindValue(":pic", $pic);
+			$q->execute();
+			
+			return $this->_db->lastInsertId();
+		}
+		
+		public function linking($id1, $id2){
+			
+			$q = $this->_db->prepare("INSERT INTO `posts_posts` (`post_id1`, `post_id2`) VALUES (:id1, :id2)");
+			$q->bindValue(":id1", $id1);
+			$q->bindValue(":id2", $id2);
+			$q->execute();
+			
+			return "Done";
+		}
+		
+		public function updateArticle($titre, $article, $cat_id, $id){
+			$q = $this->_db->prepare("UPDATE `posts` SET `id_category` = :cat_id, `post_title` = :titre, `post_content` = :article WHERE `id` = :id");
+			$q->bindValue(":id", $id);
+			$q->bindValue(":cat_id", $cat_id);
+			$q->bindValue(":titre", $titre);
+			$q->bindValue(":article", $article);
+			$q->execute();
+			
+			return "done";
+		}
 
 	}

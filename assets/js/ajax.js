@@ -1,6 +1,3 @@
-var progressBar = document.getElementById("progress");
-var loadBtn = document.getElementById("startUpload");
-
 function articleLoader(cat){
 	xhr = new XMLHttpRequest();
 	
@@ -16,52 +13,6 @@ function articleLoader(cat){
 	xhr.open("POST",'index.php',true);
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	xhr.send("action=loadMoreArticles&cat="+cat);
-}
-
-function fade(element) {
-    var op = 1;  // initial opacity
-    var timer = setInterval(function () {
-        if (op <= 0.1){
-			element.style.opacity = 0;
-            clearInterval(timer);
-        }
-        element.style.opacity = op;
-		console.log(element.style.opacity);
-        op -= op * 0.1;
-    }, 10);
-}
-
-
-function unfade(element) {
-
-    var op = 0.1;  // initial opacity
-    var timer = setInterval(function () {
-        if (op >= 1){
-            clearInterval(timer);
-			element[0].classList.remove("visible");
-        }
-		
-		if (typeof(element[0]) != 'undefined' && element[0] != null)
-		{
-			element[0].style.opacity = op;
-			op += op * 0.1;
-		}
-		
-    }, 10);
-}
-
-
-function unfadeId(element) {
-    var op = 0.1;  // initial opacity
-    var timer = setInterval(function () {
-        if (op >= 1){
-            clearInterval(timer);
-			element.style.opacity = 1;
-        }
-        element.style.opacity = op;
-		console.log(element.style.opacity);
-        op += op * 0.1;
-    }, 10);
 }
 
 function subscribeNewsletter(mail){
@@ -224,60 +175,4 @@ function renameCategory(id, newName){
 	}
 }
 
-function uploadFile(data){
-	xhr = new XMLHttpRequest();
-	xhr.open("POST",'index.php',true);
-	
-	
-	xhr.onreadystatechange = function()
-	{
-		if (xhr.readyState == 4 && xhr.status == 200)
-		{
-			document.getElementById('upload').innerHTML = xhr.response;
-		}
-	}
-	
-	if (xhr.upload) {
-		xhr.upload.onprogress = function (e) {
-			if (e.lengthComputable) {
-				progressBar.max = e.total;
-				progressBar.value = e.loaded;
-				display.innerText = Math.floor((e.loaded / e.total) * 100) + '%';
-			}
-			
-		}
-		xhr.upload.onloadstart = function (e) {
-			progressBar.value = 0;
-			display.innerText = '0%';
-			console.log("start");
-		}
-		xhr.upload.onloadend = function (e) {
-			progressBar.value = e.loaded;
-			loadBtn.disabled = false;
-			loadBtn.innerHTML = 'Start uploading';
-		}
-		
-		xhr.send(data);
-	}
-	
-}
-
-function buildFormData() {
-	
-	file = document.getElementById('fileToUpload').files[0];
-	if(file)
-    {
-		var fd = new FormData();
-		fd.append('pic', file);
-	}
-
-console.log(fd);
-  return fd;
-}
-
-loadBtn.addEventListener("click", function(e) {
-  this.disabled = true;
-  this.innerHTML = "Uploading...";
-  uploadFile(buildFormData());
-});
 
